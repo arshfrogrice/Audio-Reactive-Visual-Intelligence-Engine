@@ -38,16 +38,18 @@ class Particle:
         self.vx = random.uniform(-2, 2)
         self.vy = random.uniform(-2, 2)
 
-        self.size = random.randint(2, 6)
+        self.size = random.randint(3,4)
 
         #self.speed_x = random.uniform(-2, 2)
         #self.speed_y = random.uniform(-2, 2)
+        palette = [
+        (120,180,255),
+        (80,220,255),
+        (180,220,255),
+        (150,255,255)
+        ]
 
-        self.color = (
-            random.randint(100, 255),
-            random.randint(100, 255),
-            random.randint(100, 255),
-        )
+        self.color = random.choice(palette)
 
     def move(self,energy,time):
         self.x += self.vx * (1 + energy * 8)
@@ -106,8 +108,8 @@ particles = [Particle() for _ in range(150)]
 pulse = 0
 
 fade_surface = pygame.Surface((Width, Height))
-fade_surface.set_alpha(50)
-fade_surface.fill((5, 5, 15))
+fade_surface.set_alpha(35)
+fade_surface.fill((0, 0, 8))
 
 
 #rms stuff
