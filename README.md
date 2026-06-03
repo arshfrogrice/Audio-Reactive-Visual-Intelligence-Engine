@@ -1,6 +1,6 @@
-# 🎵 Audio-Reactive Visual Intelligence Engine
+# 🎵 Pulse: An Audio-Reactive Visual Intelligence Engine
 
-A multimedia performance system that analyzes music in real time and transforms it into dynamic, interactive visuals. The system combines **digital signal processing**, **machine learning**, and **procedural graphics** into a single modular Python application.
+A multimedia performance system that analyzes audio and transforms it into dynamic, interactive visuals using **digital signal processing**, **machine learning**, and **procedural graphics**.
 
 ---
 
@@ -76,7 +76,7 @@ A multimedia performance system that analyzes music in real time and transforms 
 ## Project Structure
 
 ```
-Real-Time-Audio-Reactive-Visual-Engine/
+Audio-Reactive-Visual-Intelligence-Engine/
 │
 ├── main.py                  # Entry point — renderer and main loop
 │
@@ -172,7 +172,7 @@ Exponential smoothing (`α = 0.1`) is applied to all band energies each frame to
 ## Extending the Project
 
 - **Add more moods** — increase `n_clusters` in `mood_classifier.py` and retrain on a larger song library; inspect cluster centroids to assign labels
-- **Gesture control** — wire `gestures/hand_tracker.py` to switch presets or adjust parameters via hand landmarks from MediaPipe
+-  MediaPipe gesture control for real-time interaction and preset switching
 - **Live microphone input** — replace `pygame.mixer` playback + pre-analyzed data with a `sounddevice` stream feeding librosa's streaming STFT for true real-time processing
 - **Shader effects** — replace Pygame's software renderer with ModernGL for GPU-accelerated particle rendering and GLSL shaders
 
