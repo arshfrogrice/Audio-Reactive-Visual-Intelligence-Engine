@@ -7,12 +7,57 @@ import math
 pygame.init()
 pygame.mixer.init()
 
-song="D:\Music\DNB #1\SpotiMate.io - Operator - Extended Mix - Arcando.mp3"
+song = r"D:\Downloads\Chopin - Nocturne in E Flat Major (Op. 9 No. 2) - Rousseau.mp3"
 
 from audio.analyzer import analyze_audio
+
+from ml.mood_classifier import train_model, predict_mood
+
+training_songs = [
+
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Kanine & Arcando - Lost Tonight (ft. HEIGHTS) - Arcando.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Hide U (Tinlicker Extended Remix).mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Calvin Harris - I'm Not Alone (MPH Remix - Official Audio) - CalvinHarrisVEVO.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Porter Robinson - Sad Machine (Official Lyric Video) - PorterRobinsonVEVO.mp3",
+    r"C:\Users\black\Audio Visual Detection Project\audio\ROSÉ x Bruno Mars - APT. (Dabin Remix).mp3",
+    r"C:\Users\black\Audio Visual Detection Project\audio\Seedhe Maut - Raat Ki Raani  (Lyrics) - Musicgenree.mp3",
+    r"C:\Users\black\Audio Visual Detection Project\audio\Paresh Pahuja - Dooron Dooron (Live from The Voice Notes Concert) - Paresh Pahuja.mp3",
+    r"C:\Users\black\Audio Visual Detection Project\audio\Kubbi _ Formed by Glaciers - Kubbi.mp3",
+    r"C:\Users\black\Audio Visual Detection Project\audio\Chopin - Nocturne in E Flat Major (Op. 9 No. 2) - Rousseau.mp3"
+
+    ]
+model = train_model(training_songs)
+
+
+
 data=analyze_audio(song)
 print("Tempo:", data["tempo"])
 print(data["beat_times"][:10])
+mood = predict_mood(model, data)
+
+
+print("Detected Mood:", mood)
+print(model.cluster_centers_)
+
+if mood == "Energetic":
+    particle_count = 100
+    trail_alpha = 35
+    palette = [
+    (255,100,255),
+    (220,80,255),
+    (255,150,220),
+    (180,80,255)
+    ]
+
+elif mood == "Calm":
+    particle_count = 80
+    trail_alpha = 20
+    palette = [
+    (120,180,255),
+    (80,220,255),
+    (180,220,255),
+    (150,255,255)
+    ]
 
 Width, Height = 1000, 500
 pygame.display.set_caption("Audio Reactive Visual Engine")
@@ -42,12 +87,7 @@ class Particle:
 
         #self.speed_x = random.uniform(-2, 2)
         #self.speed_y = random.uniform(-2, 2)
-        palette = [
-        (120,180,255),
-        (80,220,255),
-        (180,220,255),
-        (150,255,255)
-        ]
+
 
         self.color = random.choice(palette)
 
@@ -61,15 +101,15 @@ class Particle:
         if self.y <= 0 or self.y >= Height:
             self.vy *= -1
             
-        self.vx *= 0.98
-        self.vy *= 0.98    
+        self.vx *= 0.995
+        self.vy *= 0.995   
         
-        #noise systems 
-        #angle_x = math.sin(self.x * 0.01 + time) * 2
-        #angle_y = math.sin(self.y * 0.01 + time) * 2
-
-        self.vx += math.sin(self.y * 0.01 + time) * 0.02
-        self.vy += math.cos(self.x * 0.01 + time) * 0.02
+    
+        self.vx += math.sin(self.y * 0.01 + time) * 0.05
+        self.vy += math.cos(self.x * 0.01 + time) * 0.05
+        
+        self.vx += random.uniform(-0.01, 0.01)
+        self.vy += random.uniform(-0.01, 0.01)
             
 
     def draw(self, pulse):
@@ -92,7 +132,7 @@ class Particle:
                     (p1.y - p2.y) ** 2
                 )
 
-                if distance < 100:
+                if distance < 80:
 
                     pygame.draw.line(
                     screen,
@@ -103,12 +143,12 @@ class Particle:
                     )
         
         
-particles = [Particle() for _ in range(150)]
+particles = [Particle() for _ in range(particle_count)]
 
 pulse = 0
 
 fade_surface = pygame.Surface((Width, Height))
-fade_surface.set_alpha(35)
+fade_surface.set_alpha(trail_alpha)
 fade_surface.fill((0, 0, 8))
 
 
