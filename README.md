@@ -1,4 +1,4 @@
-# 🎵 Real-Time Audio-Reactive Visual Engine
+# 🎵 Audio-Reactive Visual Intelligence Engine
 
 A multimedia performance system that analyzes music in real time and transforms it into dynamic, interactive visuals. The system combines **digital signal processing**, **machine learning**, and **procedural graphics** into a single modular Python application.
 
@@ -99,8 +99,8 @@ Real-Time-Audio-Reactive-Visual-Engine/
 **Requirements: Python 3.9+**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Real-Time-Audio-Reactive-Visual-Engine.git
-cd Real-Time-Audio-Reactive-Visual-Engine
+git clone https://github.com/arshfrogrice/Audio-Reactive-Visual-Intelligence-Engine.git
+cd Audio-Reactive-Visual-Intelligence-Engine
 pip install librosa numpy scikit-learn pygame
 ```
 
