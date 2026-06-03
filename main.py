@@ -79,14 +79,10 @@ class Particle:
         self.x = random.randint(0, Width)
         self.y = random.randint(0, Height)
         
-        #adding velocity to the particles
         self.vx = random.uniform(-2, 2)
         self.vy = random.uniform(-2, 2)
 
         self.size = random.randint(3,4)
-
-        #self.speed_x = random.uniform(-2, 2)
-        #self.speed_y = random.uniform(-2, 2)
 
 
         self.color = random.choice(palette)
