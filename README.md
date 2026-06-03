@@ -13,23 +13,23 @@ A multimedia performance system that analyzes music in real time and transforms 
 ## Architecture
 
 ```
-┌─────────────────────┐     ┌──────────────────────┐     ┌─────────────────────┐
-│   audio/            │     │   ml/                │     │   gestures/         │
-│   analyzer.py       │────▶│   mood_classifier.py │────▶│   hand_tracker.py   │
-│                     │     │                      │     │                     │
-│  librosa + NumPy    │     │  scikit-learn KMeans │     │  OpenCV + MediaPipe │
-│  FFT / STFT         │     │  feature → preset    │     │  landmark → action  │
-└────────┬────────────┘     └──────────────────────┘     └──────────┬──────────┘
-         │                                                           │
-         └──────────────────────┬────────────────────────────────────┘
-                                ▼
-                     ┌──────────────────────┐
-                     │   main.py            │
-                     │   Pygame renderer    │
-                     │   particle system    │
-                     │   flow fields        │
-                     │   beat-sync pulses   │
-                     └──────────────────────┘
+┌─────────────────────┐     ┌──────────────────────┐
+│   audio/            │     │   ml/                │
+│   analyzer.py       │────▶│   mood_classifier.py │
+│                     │     │                      │
+│  librosa + NumPy    │     │  scikit-learn KMeans │
+│  FFT / STFT         │     │  feature → preset    │
+└────────┬────────────┘     └──────────┬───────────┘
+         │                             │
+         └─────────────┬───────────────┘
+                       ▼
+            ┌──────────────────────┐
+            │   main.py            │
+            │   Pygame renderer    │
+            │   particle system    │
+            │   flow fields        │
+            │   beat-sync pulses   │
+            └──────────────────────┘
 ```
 
 ---
@@ -68,7 +68,6 @@ A multimedia performance system that analyzes music in real time and transforms 
 |---|---|
 | Audio analysis | `librosa`, `numpy` |
 | Machine learning | `scikit-learn` |
-| Computer vision | `opencv-python`, `mediapipe` |
 | Rendering | `pygame` |
 | Audio playback | `pygame.mixer` |
 
@@ -89,10 +88,6 @@ Real-Time-Audio-Reactive-Visual-Engine/
 │   ├── __init__.py
 │   └── mood_classifier.py   # KMeans mood classification + visual preset selection
 │
-├── gestures/
-│   ├── __init__.py
-│   └── hand_tracker.py      # MediaPipe hand gesture recognition
-│
 └── audio/                   # Training songs directory (not tracked by git)
     └── *.mp3
 ```
@@ -106,7 +101,7 @@ Real-Time-Audio-Reactive-Visual-Engine/
 ```bash
 git clone https://github.com/YOUR_USERNAME/Real-Time-Audio-Reactive-Visual-Engine.git
 cd Real-Time-Audio-Reactive-Visual-Engine
-pip install librosa numpy scikit-learn pygame opencv-python mediapipe joblib
+pip install librosa numpy scikit-learn pygame
 ```
 
 ---
