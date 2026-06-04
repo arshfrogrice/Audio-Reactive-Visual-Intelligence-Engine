@@ -21,14 +21,14 @@ def train_model(song_paths):
 
     for song in song_paths:
 
-        data = analyze_audio(song)
+        data = analyze_audio(song,duration=60)
 
         features.append(
             extract_features(data)
         )
 
     model = KMeans(
-        n_clusters=2,
+        n_clusters=3,
         random_state=42
     )
 
@@ -48,11 +48,10 @@ def predict_mood(model, song_data):
 
     print("Cluster:", cluster)
 
-    if tempo > 120 and rms > 0.1:
-        return "Energetic"
-    else:
-        return "Calm"
-    
-    
+    mood_map = {
+    0: "Energetic",
+    1: "Calm",
+    2: "Balanced"
+    }   
 
     return mood_map[cluster]

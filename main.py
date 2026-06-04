@@ -7,7 +7,7 @@ import math
 pygame.init()
 pygame.mixer.init()
 
-song = r"D:\Downloads\Chopin - Nocturne in E Flat Major (Op. 9 No. 2) - Rousseau.mp3"
+song = r"C:\\Users\black\Audio Visual Detection Project\\audio\\test_songs\SpotiMate.io - Operator - Extended Mix - Arcando.mp3"
 
 from audio.analyzer import analyze_audio
 
@@ -15,29 +15,34 @@ from ml.mood_classifier import train_model, predict_mood
 
 training_songs = [
 
-    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Kanine & Arcando - Lost Tonight (ft. HEIGHTS) - Arcando.mp3",
-    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Hide U (Tinlicker Extended Remix).mp3",
-    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Calvin Harris - I'm Not Alone (MPH Remix - Official Audio) - CalvinHarrisVEVO.mp3",
-    r"C:\\Users\black\Audio Visual Detection Project\\audio\\Porter Robinson - Sad Machine (Official Lyric Video) - PorterRobinsonVEVO.mp3",
-    r"C:\Users\black\Audio Visual Detection Project\audio\ROSÉ x Bruno Mars - APT. (Dabin Remix).mp3",
-    r"C:\Users\black\Audio Visual Detection Project\audio\Seedhe Maut - Raat Ki Raani  (Lyrics) - Musicgenree.mp3",
-    r"C:\Users\black\Audio Visual Detection Project\audio\Paresh Pahuja - Dooron Dooron (Live from The Voice Notes Concert) - Paresh Pahuja.mp3",
-    r"C:\Users\black\Audio Visual Detection Project\audio\Kubbi _ Formed by Glaciers - Kubbi.mp3",
-    r"C:\Users\black\Audio Visual Detection Project\audio\Chopin - Nocturne in E Flat Major (Op. 9 No. 2) - Rousseau.mp3"
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Kanine & Arcando - Lost Tonight (ft. HEIGHTS) - Arcando.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Hide U (Tinlicker Extended Remix).mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Calvin Harris - I'm Not Alone (MPH Remix - Official Audio) - CalvinHarrisVEVO.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Porter Robinson - Sad Machine (Official Lyric Video) - PorterRobinsonVEVO.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\ROSÉ x Bruno Mars - APT. (Dabin Remix).mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Seedhe Maut - Raat Ki Raani  (Lyrics) - Musicgenree.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Paresh Pahuja - Dooron Dooron (Live from The Voice Notes Concert) - Paresh Pahuja.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Kubbi _ Formed by Glaciers - Kubbi.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Chopin - Nocturne in E Flat Major (Op. 9 No. 2) - Rousseau.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Attack On Titan OST - Call of Silence (Ymir's Theme) - PianoDeuss.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\C418 - Aria Math (Minecraft Volume Beta) - NycrypticProject.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Fly Me To The Moon - Charles Cornell.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Für Elise - Reimagined - Alexander Joseph.mp3",
+    r"C:\\Users\black\Audio Visual Detection Project\\audio\\train_songs\\Kygo & Selena Gomez - It Ain't Me (Audio) - KygoOfficialVEVO.mp3",
+    
 
     ]
 model = train_model(training_songs)
+print(model.cluster_centers_)
 
 
 
 data=analyze_audio(song)
 print("Tempo:", data["tempo"])
-print(data["beat_times"][:10])
 mood = predict_mood(model, data)
 
 
 print("Detected Mood:", mood)
-print(model.cluster_centers_)
 
 if mood == "Energetic":
     particle_count = 100
@@ -50,13 +55,23 @@ if mood == "Energetic":
     ]
 
 elif mood == "Calm":
-    particle_count = 80
+    particle_count = 60
     trail_alpha = 20
     palette = [
     (120,180,255),
     (80,220,255),
     (180,220,255),
     (150,255,255)
+    ]
+    
+elif mood == "Balanced":
+    particle_count = 80
+    trail_alpha = 30
+    palette = [
+    (140, 120, 255), 
+    (120, 180, 255),
+    (180, 140, 255), 
+    (100, 220, 255)   
     ]
 
 Width, Height = 1000, 500
