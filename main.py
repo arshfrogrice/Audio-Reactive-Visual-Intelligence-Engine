@@ -45,7 +45,7 @@ mood = predict_mood(model, data)
 print("Detected Mood:", mood)
 
 if mood == "Energetic":
-    particle_count = 100
+    particle_count = 80
     trail_alpha = 35
     palette = [
     (255,100,255),
@@ -65,7 +65,7 @@ elif mood == "Calm":
     ]
     
 elif mood == "Balanced":
-    particle_count = 80
+    particle_count = 70
     trail_alpha = 30
     palette = [
     (140, 120, 255), 
@@ -116,11 +116,11 @@ class Particle:
         self.vy *= 0.995   
         
     
-        self.vx += math.sin(self.y * 0.01 + time) * 0.05
-        self.vy += math.cos(self.x * 0.01 + time) * 0.05
+        self.vx += math.sin(self.y * 0.01 + time) * flow_strength
+        self.vy += math.cos(self.x * 0.01 + time) * flow_strength
         
-        self.vx += random.uniform(-0.01, 0.01)
-        self.vy += random.uniform(-0.01, 0.01)
+        self.vx += random.uniform(-0.03, 0.03)
+        self.vy += random.uniform(-0.03, 0.03)
             
 
     def draw(self, pulse):
@@ -157,6 +157,7 @@ class Particle:
 particles = [Particle() for _ in range(particle_count)]
 
 pulse = 0
+flash_alpha = 0
 
 fade_surface = pygame.Surface((Width, Height))
 fade_surface.set_alpha(trail_alpha)
@@ -221,7 +222,7 @@ while running:
     100, min(255, int(smooth_treble * 40+100)))
     
     bass_force = math.sqrt(smooth_bass) * 0.1
-    flow_strength = smooth_mid * 0.002 
+    flow_strength = smooth_mid * 0.02 
     
 
     for event in pygame.event.get():
@@ -230,11 +231,32 @@ while running:
 
     
     screen.blit(fade_surface, (0, 0))
+    if flash_alpha > 1:
+        
+        flash_surface= pygame.Surface((Width, Height))
+        if(mood=="Energetic"):
+            flash_surface.fill((80, 20, 80))
+        elif(mood=="Balanced"):
+            flash_surface.fill((50, 40, 80))
+        elif(mood=="Calm"):
+            flash_surface.fill((20, 60, 80))
+
+        flash_surface.set_alpha(
+            int(flash_alpha)
+        )
+        screen.blit(
+        flash_surface,
+        (0, 0)
+        )
+
+    
 
     pulse *= 0.9
+    flash_alpha *= 0.85
     
     for beat in data["beat_times"]:
         if abs(current_time - beat) < 0.1:
+            flash_alpha = 25
             pulse = 8
             for particle in particles:
                 particle.vx += random.uniform(-bass_force, bass_force)
