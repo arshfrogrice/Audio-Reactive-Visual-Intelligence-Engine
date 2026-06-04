@@ -29,7 +29,7 @@ def analyze_audio(file_path,duration=None):
     rms_times = librosa.times_like(rms, sr=sr)
 
     return {
-        "tempo": tempo,
+        "tempo": float(tempo[0]) if hasattr(tempo, "__len__") else float(tempo),
         "beat_times": beat_times,
         "rms": rms,
         "rms_times": rms_times,

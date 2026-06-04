@@ -33,16 +33,13 @@ training_songs = [
 
     ]
 model = train_model(training_songs)
-print(model.cluster_centers_)
-
 
 
 data=analyze_audio(song)
-print("Tempo:", data["tempo"])
+print("Tempo:", round(float(data["tempo"]), 2), "BPM")
 mood = predict_mood(model, data)
 
 
-print("Detected Mood:", mood)
 
 if mood == "Energetic":
     particle_count = 80
@@ -147,7 +144,7 @@ class Particle:
 
                     pygame.draw.line(
                     screen,
-                    (50, line_intensity, 255),
+                    (50, brightness, 255),
                     (int(p1.x), int(p1.y)),
                     (int(p2.x), int(p2.y)),
                     1
@@ -162,6 +159,7 @@ flash_alpha = 0
 fade_surface = pygame.Surface((Width, Height))
 fade_surface.set_alpha(trail_alpha)
 fade_surface.fill((0, 0, 8))
+flash_surface= pygame.Surface((Width, Height))
 
 
 #rms stuff
@@ -201,6 +199,11 @@ def get_current_treble(current_time):
 
     return data["treble"][closest_index]
 
+print("\n=== Audio Analysis ===")
+print("Tempo:", round(float(data["tempo"]), 2), "BPM")
+print("Detected Mood:", mood)
+print("======================\n")
+
     
 running = True
 while running:
@@ -233,7 +236,6 @@ while running:
     screen.blit(fade_surface, (0, 0))
     if flash_alpha > 1:
         
-        flash_surface= pygame.Surface((Width, Height))
         if(mood=="Energetic"):
             flash_surface.fill((80, 20, 80))
         elif(mood=="Balanced"):
@@ -271,6 +273,9 @@ while running:
     pygame.display.flip()
 
     time += 0.03
+    
+    
+
     
 
     

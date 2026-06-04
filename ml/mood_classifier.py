@@ -46,8 +46,6 @@ def predict_mood(model, song_data):
 
     cluster = model.predict([features])[0]
 
-    print("Cluster:", cluster)
-
     mood_map = {
     0: "Energetic",
     1: "Calm",
